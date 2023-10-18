@@ -10,7 +10,7 @@ import lombok.Setter;
 @Getter
 public class Rating {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
 

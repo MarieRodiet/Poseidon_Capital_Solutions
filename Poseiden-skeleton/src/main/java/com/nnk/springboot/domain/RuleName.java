@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class RuleName {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
     private Integer id;
     @Column
