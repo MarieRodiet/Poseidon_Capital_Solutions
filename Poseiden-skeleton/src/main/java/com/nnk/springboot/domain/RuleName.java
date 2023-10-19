@@ -13,16 +13,22 @@ public class RuleName {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name="_id")
     private Integer id;
+
     @Column(name="_name")
     private String name;
+
     @Column(name="_description")
     private String description;
+
     @Column(name="_json")
     private String json;
+
     @Column(name="_template")
     private String template;
+
     @Column(name="_sqlStr")
     private String sqlStr;
+
     @Column(name="_sqlPart")
     private String sqlPart;
 
