@@ -12,22 +12,22 @@ import lombok.Setter;
 public class User {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column
+    @Column(name="_id")
     private Integer id;
 
-    @Column
+    @Column(name="_username")
     @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @Column
+    @Column(name="_password")
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @Column
+    @Column(name="_fullname")
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
 
-    @Column
+    @Column(name="_role")
     @NotBlank(message = "Role is mandatory")
     private String role;
 }

@@ -21,6 +21,9 @@ public class SpringSecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .headers((headers) ->
+                        headers
+                                .frameOptions((frameOptions) -> frameOptions.sameOrigin().disable()))
                 .authorizeHttpRequests((authorize) ->
                         authorize
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()

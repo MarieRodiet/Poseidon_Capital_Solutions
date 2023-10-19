@@ -14,67 +14,67 @@ import java.sql.Timestamp;
 public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="_tradeId")
     private Integer tradeId;
 
-    @Column
+    @Column(name="_account")
     private String account;
 
-    @Column
+    @Column(name="_type")
     private String type;
 
-    @Column
+    @Column(name="_buyQuantity")
     private Double buyQuantity;
 
-    @Column
+    @Column(name="_sellQuantity")
     private Double sellQuantity;
 
-    @Column
+    @Column(name="_buyPrice")
     private Double buyPrice;
 
-    @Column
+    @Column(name="_sellPrice")
     private Double sellPrice;
 
-    @Column
+    @Column(name="_benchmark")
     private String benchmark;
 
-    @Column
+    @Column(name="_tradeDate")
     private Timestamp tradeDate;
 
-    @Column
+    @Column(name="_security")
     private String security;
 
-    @Column
+    @Column(name="_status")
     private String status;
 
-    @Column
+    @Column(name="_trader")
     private String trader;
 
-    @Column
+    @Column(name="_book")
     private String book;
 
-    @Column
+    @Column(name="_creationName")
     private String creationName;
 
-    @Column
+    @Column(name="_creationDate")
     private Timestamp creationDate;
 
-    @Column
+    @Column(name="_revisionName")
     private String revisionName;
 
-    @Column
+    @Column(name="_revisionDate")
     private Timestamp revisionDate;
 
-    @Column
+    @Column(name="_dealName")
     private String dealName;
 
-    @Column
+    @Column(name="_dealType")
     private String dealType;
 
-    @Column
+    @Column(name="_sourceListId")
     private String sourceListId;
 
-    @Column
+    @Column(name="_side")
     private String side;
 
 }
