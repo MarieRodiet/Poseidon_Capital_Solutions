@@ -11,19 +11,25 @@ import lombok.Setter;
 public class RuleName {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name="_id")
     private Integer id;
-    @Column
+
+    @Column(name="_name")
     private String name;
-    @Column
+
+    @Column(name="_description")
     private String description;
-    @Column
+
+    @Column(name="_json")
     private String json;
-    @Column
+
+    @Column(name="_template")
     private String template;
-    @Column
+
+    @Column(name="_sqlStr")
     private String sqlStr;
-    @Column
+
+    @Column(name="_sqlPart")
     private String sqlPart;
 
 }
