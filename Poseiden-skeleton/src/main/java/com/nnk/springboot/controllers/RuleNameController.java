@@ -58,8 +58,8 @@ public class RuleNameController {
         }
         ruleName.setId(id);
         ruleNameRepository.save(ruleName);
-        model.addAttribute("ruleName", ruleName);
-        return "redirect:/rating/list";
+        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        return "redirect:/ruleName/list";
     }
 
     @GetMapping("/ruleName/delete/{id}")
