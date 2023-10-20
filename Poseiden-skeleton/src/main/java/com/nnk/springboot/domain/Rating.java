@@ -11,18 +11,18 @@ import lombok.Setter;
 public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     private Integer id;
 
-    @Column
+    @Column(name = "moodys_rating")
     private String moodysRating;
 
-    @Column
+    @Column(name = "sandp_rating")
     private String sandPRating;
 
-    @Column
+    @Column(name = "fitch_rating")
     private String fitchRating;
 
-    @Column
+    @Column(name = "order_number")
     private Integer orderNumber;
 }

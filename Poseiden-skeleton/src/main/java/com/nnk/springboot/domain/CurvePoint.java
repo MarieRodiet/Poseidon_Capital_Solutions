@@ -8,28 +8,28 @@ import java.sql.Timestamp;
 
 
 @Entity
-@Table(name = "curvepoint")
+@Table(name = "curve_point")
 @Getter
 @Setter
 public class CurvePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "id")
     private Integer id;
 
-    @Column
+    @Column(name = "curve_id")
     private Integer curveId;
 
-    @Column
+    @Column(name = "as_of_date")
     private Timestamp asOfDate;
 
-    @Column
+    @Column(name = "term")
     private Double term;
 
-    @Column
+    @Column(name = "curve_value")
     private Double curveValue;
 
-    @Column
+    @Column(name = "creation_date")
     private Timestamp creationDate;
 
 }

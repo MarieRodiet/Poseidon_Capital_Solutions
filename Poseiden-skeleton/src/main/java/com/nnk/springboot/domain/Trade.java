@@ -14,67 +14,69 @@ import java.sql.Timestamp;
 public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "trade_id")
     private Integer tradeId;
 
-    @Column
+    @Column(name = "account")
     private String account;
 
-    @Column
+    @Column(name = "type")
     private String type;
 
-    @Column
+    @Column(name = "buy_quantity")
     private Double buyQuantity;
 
-    @Column
+    @Column(name = "sell_quantity")
     private Double sellQuantity;
 
-    @Column
+    @Column(name = "buy_price")
     private Double buyPrice;
 
-    @Column
+    @Column(name = "sell_price")
     private Double sellPrice;
 
-    @Column
+    @Column(name = "benchmark")
     private String benchmark;
 
-    @Column
+    @Column(name = "trade_date")
     private Timestamp tradeDate;
 
-    @Column
+    @Column(name = "security")
     private String security;
 
-    @Column
+    @Column(name = "status")
     private String status;
 
-    @Column
+    @Column(name = "trader")
     private String trader;
 
-    @Column
+    @Column(name = "book")
     private String book;
 
-    @Column
+    @Column(name = "creation_name")
     private String creationName;
 
-    @Column
+    @Column(name = "creation_date")
     private Timestamp creationDate;
 
-    @Column
+    @Column(name = "revision_name")
     private String revisionName;
 
-    @Column
+    @Column(name = "revision_date")
     private Timestamp revisionDate;
 
-    @Column
+    @Column(name = "deal_name")
     private String dealName;
 
-    @Column
+    @Column(name = "deal_type")
     private String dealType;
 
-    @Column
+    @Column(name = "source_list_id")
     private String sourceListId;
 
-    @Column
+    @Column(name = "side")
     private String side;
+
+
 
 }

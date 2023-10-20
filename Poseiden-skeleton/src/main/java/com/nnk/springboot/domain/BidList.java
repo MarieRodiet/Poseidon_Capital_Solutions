@@ -14,69 +14,69 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column
+    @Column(name = "bidListId")
     private Integer bidListId;
 
-    @Column
+    @Column(name = "account")
     private String account;
 
-    @Column
+    @Column(name = "type")
     private String type;
 
-    @Column
+    @Column(name = "bidQuantity")
     private Double bidQuantity;
 
-    @Column
+    @Column(name = "askQuantity")
     private Double askQuantity;
 
-    @Column
+    @Column(name = "bid")
     private Double bid;
 
-    @Column
+    @Column(name = "ask")
     private Double ask;
 
-    @Column
+    @Column(name = "benchmark")
     private String benchmark;
 
-    @Column
+    @Column(name = "bidListDate")
     private Timestamp bidListDate;
 
-    @Column
+    @Column(name = "commentary")
     private String commentary;
 
-    @Column
+    @Column(name = "security")
     private String security;
 
-    @Column
+    @Column(name = "status")
     private String status;
 
-    @Column
+    @Column(name = "trader")
     private String trader;
 
-    @Column
+    @Column(name = "book")
     private String book;
 
-    @Column
+    @Column(name = "creationName")
     private String creationName;
 
-    @Column
+    @Column(name = "creationDate")
     private Timestamp creationDate;
 
-    @Column
+    @Column(name = "revisionName")
     private String revisionName;
 
-    @Column
+    @Column(name = "revisionDate")
     private Timestamp revisionDate;
 
-    @Column
+    @Column(name = "dealName")
     private String dealName;
 
-    @Column
+    @Column(name = "dealType")
     private String dealType;
 
-    @Column
+    @Column(name = "sourceListId")
     private String sourceListId;
 
-    @Column
+    @Column(name = "side")
     private String side;
 }
