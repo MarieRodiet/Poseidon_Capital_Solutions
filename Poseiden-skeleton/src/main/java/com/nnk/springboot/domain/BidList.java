@@ -14,69 +14,69 @@ public class BidList {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="_bidListId")
+    @Column(name = "bidListId")
     private Integer bidListId;
 
-    @Column(name="_account")
+    @Column(name = "account")
     private String account;
 
-    @Column(name="_type")
+    @Column(name = "type")
     private String type;
 
-    @Column(name="_bidQuantity")
+    @Column(name = "bidQuantity")
     private Double bidQuantity;
 
-    @Column(name="_askQuantity")
+    @Column(name = "askQuantity")
     private Double askQuantity;
 
-    @Column(name="_bid")
+    @Column(name = "bid")
     private Double bid;
 
-    @Column(name="_ask")
+    @Column(name = "ask")
     private Double ask;
 
-    @Column(name="_benchmark")
+    @Column(name = "benchmark")
     private String benchmark;
 
-    @Column(name="_bidListDate")
+    @Column(name = "bidListDate")
     private Timestamp bidListDate;
 
-    @Column(name="_commentary")
+    @Column(name = "commentary")
     private String commentary;
 
-    @Column(name="_security")
+    @Column(name = "security")
     private String security;
 
-    @Column(name="_status")
+    @Column(name = "status")
     private String status;
 
-    @Column(name="_trader")
+    @Column(name = "trader")
     private String trader;
 
-    @Column(name="_book")
+    @Column(name = "book")
     private String book;
 
-    @Column(name="_creationName")
+    @Column(name = "creationName")
     private String creationName;
 
-    @Column(name="_creationDate")
+    @Column(name = "creationDate")
     private Timestamp creationDate;
 
-    @Column(name="_revisionName")
+    @Column(name = "revisionName")
     private String revisionName;
 
-    @Column(name="_revisionDate")
+    @Column(name = "revisionDate")
     private Timestamp revisionDate;
 
-    @Column(name="_dealName")
+    @Column(name = "dealName")
     private String dealName;
 
-    @Column(name="_dealType")
+    @Column(name = "dealType")
     private String dealType;
 
-    @Column(name="_sourceListId")
+    @Column(name = "sourceListId")
     private String sourceListId;
 
-    @Column(name="_side")
+    @Column(name = "side")
     private String side;
 }

@@ -14,67 +14,69 @@ import java.sql.Timestamp;
 public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="_tradeId")
+    @Column(name = "trade_id")
     private Integer tradeId;
 
-    @Column(name="_account")
+    @Column(name = "account")
     private String account;
 
-    @Column(name="_type")
+    @Column(name = "type")
     private String type;
 
-    @Column(name="_buyQuantity")
+    @Column(name = "buy_quantity")
     private Double buyQuantity;
 
-    @Column(name="_sellQuantity")
+    @Column(name = "sell_quantity")
     private Double sellQuantity;
 
-    @Column(name="_buyPrice")
+    @Column(name = "buy_price")
     private Double buyPrice;
 
-    @Column(name="_sellPrice")
+    @Column(name = "sell_price")
     private Double sellPrice;
 
-    @Column(name="_benchmark")
+    @Column(name = "benchmark")
     private String benchmark;
 
-    @Column(name="_tradeDate")
+    @Column(name = "trade_date")
     private Timestamp tradeDate;
 
-    @Column(name="_security")
+    @Column(name = "security")
     private String security;
 
-    @Column(name="_status")
+    @Column(name = "status")
     private String status;
 
-    @Column(name="_trader")
+    @Column(name = "trader")
     private String trader;
 
-    @Column(name="_book")
+    @Column(name = "book")
     private String book;
 
-    @Column(name="_creationName")
+    @Column(name = "creation_name")
     private String creationName;
 
-    @Column(name="_creationDate")
+    @Column(name = "creation_date")
     private Timestamp creationDate;
 
-    @Column(name="_revisionName")
+    @Column(name = "revision_name")
     private String revisionName;
 
-    @Column(name="_revisionDate")
+    @Column(name = "revision_date")
     private Timestamp revisionDate;
 
-    @Column(name="_dealName")
+    @Column(name = "deal_name")
     private String dealName;
 
-    @Column(name="_dealType")
+    @Column(name = "deal_type")
     private String dealType;
 
-    @Column(name="_sourceListId")
+    @Column(name = "source_list_id")
     private String sourceListId;
 
-    @Column(name="_side")
+    @Column(name = "side")
     private String side;
+
+
 
 }
