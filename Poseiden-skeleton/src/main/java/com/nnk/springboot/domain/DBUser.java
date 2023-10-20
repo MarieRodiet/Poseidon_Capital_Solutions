@@ -6,28 +6,29 @@ import lombok.Getter;
 import lombok.Setter;
 
 @Entity
-@Table(name = "users")
+@Table(name = "DBUser")
 @Getter
 @Setter
-public class User {
+public class DBUser {
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Column(name="_id")
+    @Column
     private Integer id;
 
-    @Column(name="_username")
+    @Column
     @NotBlank(message = "Username is mandatory")
     private String username;
 
-    @Column(name="_password")
+    @Column
     @NotBlank(message = "Password is mandatory")
     private String password;
 
-    @Column(name="_fullname")
+    @Column
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
 
-    @Column(name="_role")
+    @Column
     @NotBlank(message = "Role is mandatory")
     private String role;
 }
+

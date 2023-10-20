@@ -14,22 +14,22 @@ import java.sql.Timestamp;
 public class CurvePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name="_id")
+    @Column
     private Integer id;
 
-    @Column(name="_curveId")
+    @Column
     private Integer curveId;
 
-    @Column(name="_asOfDate")
+    @Column
     private Timestamp asOfDate;
 
-    @Column(name="_term")
+    @Column
     private Double term;
 
-    @Column(name="_value")
-    private Double value;
+    @Column
+    private Double curveValue;
 
-    @Column(name="_creationDate")
+    @Column
     private Timestamp creationDate;
 
 }
