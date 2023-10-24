@@ -1,27 +1,34 @@
-# spring-boot
-## Technical:
+# Poseidon
+## Instructions on how to start the app
 
-1. Spring Boot 3.1.0
-2. Java 17
-3. Thymeleaf
-4. Bootstrap v.4.3.1
+### Requirements
 
+For building and running the application you need:
 
-## Setup with Intellij IDE
-1. Create project from Initializr: File > New > project > Spring Initializr
-2. Add lib repository into pom.xml
-3. Add folders
-    - Source root: src/main/java
-    - View: src/main/resources
-    - Static: src/main/resource/static
-4. Create database with name "demo" as configuration in application.properties
-5. Run sql script to create table doc/data.sql
+- [JDK 1.8](http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151.html)
+- [Maven 3](https://maven.apache.org)
 
-## Implement a Feature
-1. Create mapping domain class and place in package com.nnk.springboot.domain
-2. Create repository class and place in package com.nnk.springboot.repositories
-3. Create controller class and place in package com.nnk.springboot.controllers
+### Clone Repository
+```
+git clone https://github.com/MarieRodiet/Poseidon_Capital_Solutions.git
+```
 
-## Security
-1. Create user service to load user from  database and place in package com.nnk.springboot.services
-2. Add configuration class and place in package com.nnk.springboot.config
+### Create and Run poseidon database
+1. In MySQL Workbench, create a new connection (see application.properties - spring.datasource - for username and password)
+2. test the connection
+3. run the commands localed in file src/main/resources/data.sql
+4. query the Users table to see the two users already created from the data.sql file:
+```
+   select * from db_user;
+```
+
+### Start the App in the IDE
+```
+$ mvn spring-boot:run
+```
+
+### Visit the app on http://localhost:8080/
+
+After login with User (username), user (password), navigate through the app
+ex: http://localhost:8080/ruleName/list
+
