@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 @Controller
@@ -32,13 +33,19 @@ public class RatingController {
     }
 
     @PostMapping("/rating/validate")
-    public String validate(@Valid Rating rating, BindingResult result, Model model) {
+    public String validate(
+            @Valid Rating rating,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if(!result.hasErrors()){
             ratingRepository.save(rating);
+            redirectAttributes.addFlashAttribute("success", "Rating got saved");
             model.addAttribute("ratings", ratingRepository.findAll());
-            return "rating/list";
+            return "redirect:/rating/list";
         }
-        return "rating/add";
+        redirectAttributes.addFlashAttribute("error", "Rating could not get saved");
+        return "redirect:/rating/add";
     }
 
     @GetMapping("/rating/update/{id}")
@@ -49,22 +56,32 @@ public class RatingController {
     }
 
     @PostMapping("/rating/update/{id}")
-    public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
-                             BindingResult result, Model model) {
+    public String updateRating(
+            @PathVariable("id") Integer id,
+            @Valid Rating rating,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
        if(result.hasErrors()){
+           redirectAttributes.addFlashAttribute("error", "Rating could not get updated");
            return "rating/update";
        }
        rating.setId(id);
        ratingRepository.save(rating);
+       redirectAttributes.addFlashAttribute("success", "Rating got updated");
        model.addAttribute("rating", rating);
-        return "redirect:/rating/list";
+       return "redirect:/rating/list";
     }
 
     @GetMapping("/rating/delete/{id}")
-    public String deleteRating(@PathVariable("id") Integer id, Model model) {
+    public String deleteRating(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
         ratingRepository.delete(rating);
         model.addAttribute("ratings", ratingRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "Rating got deleted");
         return "redirect:/rating/list";
     }
 }

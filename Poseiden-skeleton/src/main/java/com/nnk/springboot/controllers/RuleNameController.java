@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class RuleNameController {
@@ -32,13 +33,19 @@ public class RuleNameController {
     }
 
     @PostMapping("/ruleName/validate")
-    public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
+    public String validate(
+            @Valid RuleName ruleName,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if(!result.hasErrors()){
             ruleNameRepository.save(ruleName);
             model.addAttribute("ruleNames", ruleNameRepository.findAll());
-            return "ruleName/list";
+            redirectAttributes.addFlashAttribute("success", "Rule name got saved");
+            return "redirect:/ruleName/list";
         }
-        return "ruleName/add";
+        redirectAttributes.addFlashAttribute("error", "Rule name could not get saved");
+        return "redirect:/ruleName/add";
     }
 
     @GetMapping("/ruleName/update/{id}")
@@ -52,20 +59,28 @@ public class RuleNameController {
     public String updateRuleName(@PathVariable("id") Integer id,
                                  @Valid RuleName ruleName,
                                  BindingResult result,
+                                 RedirectAttributes redirectAttributes,
                                  Model model) {
         if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", "Rule name could not get updated");
             return "ruleName/update";
         }
         ruleName.setId(id);
         ruleNameRepository.save(ruleName);
         model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "Rule name got updated");
         return "redirect:/ruleName/list";
     }
 
     @GetMapping("/ruleName/delete/{id}")
-    public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
+    public String deleteRuleName(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         RuleName ruleName = ruleNameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
         ruleNameRepository.delete(ruleName);
+        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "Rule name got deleted");
         return "redirect:/ruleName/list";
     }
 }

@@ -8,6 +8,12 @@
 </head>
 <body>
 <div class="container">
+	<div th:if="${error}">
+		<div th:text="${error}" class="alert alert-danger"></div>
+	</div>
+	<div th:if="${success}">
+		<div th:text="${success}" class="alert alert-success"></div>
+	</div>
 	<div class="row">
 		<h2>Update CurvePoint</h2>
 	</div>

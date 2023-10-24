@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class TradeController {
@@ -32,13 +33,19 @@ public class TradeController {
     }
 
     @PostMapping("/trade/validate")
-    public String validate(@Valid Trade trade, BindingResult result, Model model) {
+    public String validate(
+            @Valid Trade trade,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if(!result.hasErrors()){
             tradeRepository.save(trade);
+            redirectAttributes.addFlashAttribute("success", "Trade got saved");
             model.addAttribute("trades", tradeRepository.findAll());
-            return "trade/list";
+            return "redirect:/trade/list";
         }
-        return "trade/add";
+        redirectAttributes.addFlashAttribute("error", "Trade could not get saved");
+        return "redirect:/trade/add";
     }
 
     @GetMapping("/trade/update/{id}")
@@ -49,22 +56,32 @@ public class TradeController {
     }
 
     @PostMapping("/trade/update/{id}")
-    public String updateTrade(@PathVariable("id") Integer id, @Valid Trade trade,
-                             BindingResult result, Model model) {
+    public String updateTrade(
+            @PathVariable("id") Integer id,
+            @Valid Trade trade,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if(result.hasErrors()){
+            redirectAttributes.addFlashAttribute("error", "Trade could not get updated");
             return "trade/update";
         }
         trade.setTradeId(id);
         tradeRepository.save(trade);
         model.addAttribute("trade", trade);
+        redirectAttributes.addFlashAttribute("success", "Trade got updated");
         return "redirect:/trade/list";
     }
 
     @GetMapping("/trade/delete/{id}")
-    public String deleteTrade(@PathVariable("id") Integer id, Model model) {
+    public String deleteTrade(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid trade id " + id));
         tradeRepository.delete(trade);
         model.addAttribute("trades", tradeRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "Trade got deleted");
         return "redirect:/trade/list";
     }
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import jakarta.validation.Valid;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Controller
 public class UserController {
@@ -33,15 +34,21 @@ public class UserController {
     }
 
     @PostMapping("/user/validate")
-    public String validate(@Valid DBUser user, BindingResult result, Model model) {
+    public String validate(
+            @Valid DBUser user,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if (!result.hasErrors()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
             userRepository.save(user);
             model.addAttribute("users", userRepository.findAll());
+            redirectAttributes.addFlashAttribute("success", "User got saved");
             return "redirect:/user/list";
         }
-        return "user/add";
+        redirectAttributes.addFlashAttribute("error", "User could not get saved");
+        return "redirect:/user/add";
     }
 
     @GetMapping("/user/update/{id}")
@@ -53,25 +60,34 @@ public class UserController {
     }
 
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid DBUser user,
-                             BindingResult result, Model model) {
+    public String updateUser(
+            @PathVariable("id") Integer id,
+            @Valid DBUser user,
+            BindingResult result,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         if (result.hasErrors()) {
+            redirectAttributes.addFlashAttribute("error", "User could not get updated");
             return "user/update";
         }
-
         BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
         user.setPassword(encoder.encode(user.getPassword()));
         user.setId(id);
         userRepository.save(user);
         model.addAttribute("users", userRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "User got updated");
         return "redirect:/user/list";
     }
 
     @GetMapping("/user/delete/{id}")
-    public String deleteUser(@PathVariable("id") Integer id, Model model) {
+    public String deleteUser(
+            @PathVariable("id") Integer id,
+            RedirectAttributes redirectAttributes,
+            Model model) {
         DBUser user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
         userRepository.delete(user);
         model.addAttribute("users", userRepository.findAll());
+        redirectAttributes.addFlashAttribute("success", "User got deleted");
         return "redirect:/user/list";
     }
 }
