@@ -1,5 +1,6 @@
 package com.nnk.springboot.domain;
 
+import com.nnk.springboot.utils.ValidPassword;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -20,6 +21,7 @@ public class DBUser {
     private String username;
 
     @Column
+    @ValidPassword
     @NotBlank(message = "Password is mandatory")
     private String password;
 
