@@ -2,47 +2,68 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" href="../../css/bootstrap.min.css">
+	<link rel="stylesheet" href="../../css/logo.css" >
 </head>
-<body>
-<div class="container">
-	<div class="row">
-		<div class="col-6">
+<body class="vh-100">
+	<div class="container">
+		<div th:if="${error}">
+			<div th:text="${error}" class="alert alert-danger"></div>
+		</div>
+		<div th:if="${success}">
+			<div th:text="${success}" class="alert alert-success"></div>
+		</div>
+		<div class="row">
+			<div class="col-7 d-flex pt-4 pb-4 justify-content-around">
+				<a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+				<a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+				<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+				<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+				<a href="/ruleName/list">Rule</a>
+				<span th:if="${role} == 'ADMIN'"> |&nbsp;
+			<a href="/user/list">User management</a>
+				</span>
+			</div>
+			<div class="col-2"></div>
+			<div class="col-3 pt-4 pb-4 text-right">
+				Logged in user: <b th:inline="text"  class="user" th:text="${httpServletRequest.getRemoteUser}" >  </b>
+				<br>
+				<a class="btn btn-secondary btn-sm" href="/logout">Logout</a>
+			</div>
+		</div>
 
-		</div>
-		<div class="col-6 text-right">
-			<a href="/">Home</a>&nbsp;|&nbsp;<a href="/login">Login</a>
+		<div class="row"><h2>User List</h2></div>
+		<div class="row">
+			<a href="/user/add" class="btn btn-primary btn-sm mb-3">Add New</a>
+			<table class="table table-bordered w-100 p-3">
+				<thead>
+					<tr>
+						<th>Id</th>
+						<th>Full Name</th>
+						<th>User Name</th>
+						<th>Role</th>
+						<th>Action</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="user : ${users}">
+						<td style="width: 10%" th:text="${user.id}"></td>
+						<td th:text="${user.fullname}"></td>
+						<td th:text="${user.username}"></td>
+						<td style="width: 25%" th:text="${user.role}"></td>
+						<td style="width: 15%" class="text-center">
+							<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
+							<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
 		</div>
 	</div>
-	<div class="row"><h2>User List</h2></div>
-	<div class="row">
-		<a href="/user/add" class="btn btn-primary btn-sm">Add New</a>
-		<table class="table table-bordered">
-			<thead>
-				<tr>
-					<th>Id</th>
-					<th>Full Name</th>
-					<th>User Name</th>
-					<th>Role</th>
-					<th>Action</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="user : ${users}">
-					<td style="width: 10%" th:text="${user.id}"></td>
-					<td th:text="${user.fullname}"></td>
-					<td th:text="${user.username}"></td>
-					<td style="width: 25%" th:text="${user.role}"></td>
-					<td style="width: 15%" class="text-center">
-						<a th:href="@{/user/update/{id}(id=${user.id})}">Edit</a>&nbsp;|&nbsp;
-						<a th:href="@{/user/delete/{id}(id=${user.id})}">Delete</a>
-					</td>
-				</tr>
-			</tbody>
-		</table>
+	<div class="container vh-100">
+		<div th:insert="fragments/logo.html :: logo"></div>
 	</div>
-</div>
 </body>
 </html>

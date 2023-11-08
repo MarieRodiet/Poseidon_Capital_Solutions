@@ -5,11 +5,17 @@
 <meta charset="utf-8"/>
 <title>Home</title>
 <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+	<link rel="stylesheet" href="../../css/logo.css" >
 </head>
-<body>
+<body class="vh-100">
 <div class="container">
-
-	<div class="row">
+	<div th:if="${error}">
+		<div th:text="${error}" class="alert alert-danger"></div>
+	</div>
+	<div th:if="${success}">
+		<div th:text="${success}" class="alert alert-success"></div>
+	</div>
+	<div class="text-center pt-4 pb-4">
 		<h2>Add New Trade</h2>
 	</div>
 
@@ -18,21 +24,21 @@
 			<div class="form-group">
 				<label for="account" class="col-sm-2 control-label">Account</label>
 				<div class="col-sm-10">
-					<input type="text" th:field="*{account}" id="account" placeholder="Account" class="col-4">
+					<input required="required" type="text" th:field="*{account}" id="account" placeholder="Account" class="col-4">
 					<p class="text-danger" th:if="${#fields.hasErrors('account')}" th:errors="*{account}"></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="type" class="col-sm-2 control-label">Type</label>
 				<div class="col-sm-10">
-					<input type="text" th:field="*{type}" id="type" placeholder="Type" class="col-4">
+					<input required="required" type="text" th:field="*{type}" id="type" placeholder="Type" class="col-4">
 					<p class="text-danger" th:if="${#fields.hasErrors('type')}" th:errors="*{type}"></p>
 				</div>
 			</div>
 			<div class="form-group">
 				<label for="buyQuantity" class="col-sm-2 control-label">Buy Quantity</label>
 				<div class="col-sm-10">
-					<input type="number" th:field="*{buyQuantity}" id="buyQuantity" placeholder="Buy Quantity" class="col-4">
+					<input required="required" type="number" th:field="*{buyQuantity}" id="buyQuantity" placeholder="Buy Quantity" class="col-4">
 					<p class="text-danger" th:if="${#fields.hasErrors('buyQuantity')}" th:errors="*{buyQuantity}"></p>
 				</div>
 			</div>
@@ -47,6 +53,9 @@
 		</form>
 	</div>
 
+</div>
+<div class="container vh-100">
+	<div th:insert="fragments/logo.html :: logo"></div>
 </div>
 </body>
 </html>
