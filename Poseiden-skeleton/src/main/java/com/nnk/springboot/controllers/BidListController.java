@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,15 @@ public class BidListController {
     private BidListRepository bidListRepository;
 
     @RequestMapping("/bidList/list")
-    public String home(Model model) {
+    public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("bidLists", bidListRepository.findAll());
+        model.addAttribute("httpServletRequest", httpServletRequest);
+        if (httpServletRequest.isUserInRole("ADMIN")) {
+            model.addAttribute("role", "ADMIN");
+        }
+        else{
+            model.addAttribute("role", "USER");
+        }
         return "bidList/list";
     }
 

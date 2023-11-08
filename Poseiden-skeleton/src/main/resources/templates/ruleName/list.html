@@ -22,11 +22,15 @@
 				<a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
 				<a href="/trade/list">Trade</a>&nbsp;|&nbsp;
 				<a href="/ruleName/list">Rule</a>
+				<span th:if="${role} == 'ADMIN'"> |&nbsp;
+			<a href="/user/list">User management</a>
+				</span>
 			</div>
-			<div class="col-3"></div>
-			<div class="col-2 pt-4 pb-4 text-right">
-				<a href="/">Home</a>&nbsp;
-				<button type="button" href="/logout" class="btn btn-secondary">Logout</button>
+			<div class="col-2"></div>
+			<div class="col-3 pt-4 pb-4 text-right">
+				Logged in user: <b th:inline="text"  class="user" th:text="${httpServletRequest.getRemoteUser}" >  </b>
+				<br>
+				<a class="btn btn-secondary btn-sm" href="/logout">Logout</a>
 			</div>
 		</div>
 		<div class="row"><h2>Rule List</h2></div>

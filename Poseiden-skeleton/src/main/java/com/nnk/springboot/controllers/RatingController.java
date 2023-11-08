@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,8 +23,15 @@ public class RatingController {
     private RatingRepository ratingRepository;
 
     @RequestMapping("/rating/list")
-    public String home(Model model) {
+    public String home(Model model, HttpServletRequest httpServletRequest) {
+        model.addAttribute("httpServletRequest", httpServletRequest);
         model.addAttribute("ratings", ratingRepository.findAll());
+        if (httpServletRequest.isUserInRole("ADMIN")) {
+            model.addAttribute("role", "ADMIN");
+        }
+        else{
+            model.addAttribute("role", "USER");
+        }
         return "rating/list";
     }
 
