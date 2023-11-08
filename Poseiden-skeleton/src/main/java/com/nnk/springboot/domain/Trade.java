@@ -1,6 +1,8 @@
 package com.nnk.springboot.domain;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +19,15 @@ public class Trade {
     @Column(name = "trade_id")
     private Integer tradeId;
 
+    @NotBlank(message = "This field is mandatory")
     @Column(name = "account")
     private String account;
 
+    @NotBlank(message = "This field is mandatory")
     @Column(name = "type")
     private String type;
 
+    @NotNull(message = "This field is mandatory")
     @Column(name = "buy_quantity")
     private Double buyQuantity;
 

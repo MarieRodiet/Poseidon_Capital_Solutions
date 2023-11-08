@@ -1,4 +1,6 @@
 package com.nnk.springboot.domain;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,12 +19,15 @@ public class BidList {
     @Column(name = "bidListId")
     private Integer bidListId;
 
+    @NotBlank(message = "This field is mandatory")
     @Column(name = "account")
     private String account;
 
+    @NotBlank(message = "This field is mandatory")
     @Column(name = "type")
     private String type;
 
+    @NotNull(message = "This field is mandatory")
     @Column(name = "bidQuantity")
     private Double bidQuantity;
 
