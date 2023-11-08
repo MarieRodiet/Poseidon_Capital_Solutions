@@ -2,22 +2,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <title> Spring Boot </title>
-    <link rel="stylesheet" href="/css/styles.css"/>
+    <link rel="stylesheet" href="../../css/bootstrap.min.css" >
+    <link rel="stylesheet" href="../../css/logo.css" >
 </head>
-<body>
-    <h3> HOME PAGE </h3>
-    <div class="row">
-        <div class="col-9 d-flex justify-content-around">
-            <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
-            <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
-            <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
-            <a href="/trade/list">Trade</a>&nbsp;|&nbsp;
-            <a href="/ruleName/list">Rule</a>
+<body class="vh-100">
+    <div class="container">
+        <div class="row pt-5 pb-5">
+            <h3> HOME PAGE </h3>
         </div>
-        <div class="col-3 text-right">
-            <a href="/logout">Logout</a>
-            <a href="/user/list">User management</a>
+
+        <div class="row">
+            <div class="col-7 d-flex pt-4 pb-4 justify-content-around">
+                <a href="/bidList/list">Bid List</a>&nbsp;|&nbsp;
+                <a href="/curvePoint/list">Curve Points</a>&nbsp;|&nbsp;
+                <a href="/rating/list">Ratings</a>&nbsp;|&nbsp;
+                <a href="/trade/list">Trade</a>&nbsp;|&nbsp;
+                <a href="/ruleName/list">Rule</a>
+            </div>
+            <div class="col-2"></div>
+            <div class="col-3 pt-4 pb-4 text-right">
+                <a href="/user/list">User management</a>
+                <button type="button" href="/logout" class="btn btn-secondary">Logout</button>
+            </div>
         </div>
+
+    </div>
+    <div class="container vh-100">
+        <div th:insert="fragments/logo.html :: logo"></div>
     </div>
 </body>
 </html>
