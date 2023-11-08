@@ -22,7 +22,9 @@
             <div class="col-2"></div>
             <div class="col-3 pt-4 pb-4 text-right">
                 <a href="/user/list">User management</a>
-                <button type="button" href="/logout" class="btn btn-secondary">Logout</button>
+                Logged in user: <b th:inline="text"  class="user" th:text="${httpServletRequest.getRemoteUser}" >  </b>
+                <br>
+                <a class="btn btn-secondary btn-sm" href="/logout">Logout</a>
             </div>
         </div>
 
