@@ -31,13 +31,13 @@ public class SpringSecurityConfig {
                         authorize
                                 .requestMatchers(PathRequest.toStaticResources().atCommonLocations()).permitAll()
                                 .requestMatchers("/h2-console/**").permitAll()
-                                .requestMatchers("/user/**").hasRole("USER")
-                                .requestMatchers("/bidList/**").hasRole("USER")
-                                .requestMatchers("/curvePoint/**").hasRole("USER")
-                                .requestMatchers("/admin/home").hasRole("USER")
-                                .requestMatchers("/rating/**").hasRole("USER")
-                                .requestMatchers("/ruleName/**").hasRole("USER")
-                                .requestMatchers("/trade/**").hasRole("USER")
+                                .requestMatchers("/user/**").hasRole("ADMIN")
+                                .requestMatchers("/bidList/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/curvePoint/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/admin/home").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/rating/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/ruleName/**").hasAnyRole("USER", "ADMIN")
+                                .requestMatchers("/trade/**").hasAnyRole("USER", "ADMIN")
                                 .anyRequest().authenticated()
 
 
