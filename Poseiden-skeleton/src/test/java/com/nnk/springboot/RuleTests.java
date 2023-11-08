@@ -15,13 +15,19 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class RuleTests {
-
+	RuleName rule;
 	@Autowired
 	private RuleNameRepository ruleNameRepository;
 
 	@Test
 	public void ruleTest() {
-		RuleName rule = new RuleName();
+		rule = new RuleName();
+		rule.setName("Rule Name");
+		rule.setDescription("description");
+		rule.setJson("json");
+		rule.setSqlPart("sqlpart");
+		rule.setSqlStr("sqlString");
+		rule.setTemplate("template");
 
 		// Save
 		rule = ruleNameRepository.save(rule);

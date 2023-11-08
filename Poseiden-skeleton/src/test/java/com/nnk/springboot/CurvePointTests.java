@@ -15,13 +15,16 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class CurvePointTests {
-
+	CurvePoint curvePoint;
 	@Autowired
 	private CurvePointRepository curvePointRepository;
 
 	@Test
 	public void curvePointTest() {
-		CurvePoint curvePoint = new CurvePoint();
+		curvePoint = new CurvePoint();
+		curvePoint.setCurveValue(0.05);
+		curvePoint.setTerm(55.05);
+		curvePoint.setCurveId(10);
 
 		// Save
 		curvePoint = curvePointRepository.save(curvePoint);

@@ -15,14 +15,16 @@ import java.util.Optional;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class TradeTests {
-
+	Trade trade;
 	@Autowired
 	private TradeRepository tradeRepository;
 
 	@Test
 	public void tradeTest() {
-		Trade trade = new Trade();
-
+		trade = new Trade();
+		trade.setAccount("Trade Account");
+		trade.setType("type");
+		trade.setBuyQuantity(55.05);
 		// Save
 		trade = tradeRepository.save(trade);
 		Assert.assertNotNull(trade.getTradeId());
