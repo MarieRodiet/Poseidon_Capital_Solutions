@@ -46,6 +46,11 @@ public class UserController {
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) {
+        DBUser alreadyExists = userRepository.findByUsername(user.getUsername());
+        if(alreadyExists != null) {
+            redirectAttributes.addFlashAttribute("error", "User already exists");
+            return "redirect:/user/list";
+        }
         if (!result.hasErrors()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
@@ -73,17 +78,20 @@ public class UserController {
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) {
-        if (result.hasErrors()) {
+        if (!result.hasErrors()) {
+            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+            user.setPassword(encoder.encode(user.getPassword()));
+            user.setId(id);
+            userRepository.save(user);
+            model.addAttribute("users", userRepository.findAll());
+            redirectAttributes.addFlashAttribute("success", "User got updated");
+            return "redirect:/user/list";
+        }
+        else{
             redirectAttributes.addFlashAttribute("error", "User could not get updated");
+            model.addAttribute("user", user);
             return "user/update";
         }
-        BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-        user.setPassword(encoder.encode(user.getPassword()));
-        user.setId(id);
-        userRepository.save(user);
-        model.addAttribute("users", userRepository.findAll());
-        redirectAttributes.addFlashAttribute("success", "User got updated");
-        return "redirect:/user/list";
     }
 
     @GetMapping("/user/delete/{id}")
