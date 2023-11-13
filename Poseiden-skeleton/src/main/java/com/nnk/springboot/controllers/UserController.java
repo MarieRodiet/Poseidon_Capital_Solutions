@@ -16,11 +16,28 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+/**
+ * The UserController class handles HTTP requests related to user management.
+ * It includes functionalities such as listing users, adding, updating, and deleting users.
+ *
+ * @author Marie Moore
+ */
 @Controller
 public class UserController {
+
+    /**
+     * The user repository for accessing user data from the database.
+     */
     @Autowired
     private UserRepository userRepository;
 
+    /**
+     * Displays the list of users based on the user's role.
+     *
+     * @param model              the data model for the view
+     * @param httpServletRequest the HTTP servlet request
+     * @return the view name for the user list
+     */
     @RequestMapping("/user/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("httpServletRequest", httpServletRequest);
@@ -34,12 +51,27 @@ public class UserController {
         return "user/list";
     }
 
+    /**
+     * Displays the form for adding a new user.
+     *
+     * @param model the data model for the view
+     * @return the view name for adding a user
+     */
     @GetMapping("/user/add")
     public String addUser(Model model) {
         model.addAttribute("user", new DBUser());
         return "user/add";
     }
 
+    /**
+     * Validates and saves a new user.
+     *
+     * @param user                the user to be validated and saved
+     * @param result              the result of the validation
+     * @param redirectAttributes  attributes for the redirect
+     * @param model               the data model for the view
+     * @return the view name or redirect URL based on the result of the operation
+     */
     @PostMapping("/user/validate")
     public String validate(
             @Valid DBUser user,
@@ -63,6 +95,13 @@ public class UserController {
         return "redirect:/user/add";
     }
 
+    /**
+     * Displays the form for updating an existing user.
+     *
+     * @param id    the ID of the user to be updated
+     * @param model the data model for the view
+     * @return the view name for updating a user
+     */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
         DBUser user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
@@ -71,6 +110,16 @@ public class UserController {
         return "user/update";
     }
 
+    /**
+     * Updates an existing user based on the provided data.
+     *
+     * @param id                  the ID of the user to be updated
+     * @param user                the user data for the update
+     * @param result              the result of the validation
+     * @param redirectAttributes  attributes for the redirect
+     * @param model               the data model for the view
+     * @return the view name or redirect URL based on the result of the operation
+     */
     @PostMapping("/user/update/{id}")
     public String updateUser(
             @PathVariable("id") Integer id,
@@ -94,6 +143,14 @@ public class UserController {
         }
     }
 
+    /**
+     * Deletes an existing user based on the provided ID.
+     *
+     * @param id                  the ID of the user to be deleted
+     * @param redirectAttributes  attributes for the redirect
+     * @param model               the data model for the view
+     * @return the redirect URL after deleting the user
+     */
     @GetMapping("/user/delete/{id}")
     public String deleteUser(
             @PathVariable("id") Integer id,
