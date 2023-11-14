@@ -1,4 +1,4 @@
-package com.nnk.springboot;
+package com.nnk.springboot.repositories;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
@@ -27,6 +27,8 @@ public class BidTests {
 		bid.setBidListId(1);
 		bid.setCreationDate(new Timestamp(new Date().getTime()));
 		bid.setBidQuantity(1.0);
+		bid.setAskQuantity(1.0);
+		bid.setBid(1.0);
 		bid.setAccount("Account Test");
 		bid.setType("Type Test");
 

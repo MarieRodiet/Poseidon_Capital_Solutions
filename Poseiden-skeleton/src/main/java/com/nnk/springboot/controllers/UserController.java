@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.DBUser;
 import com.nnk.springboot.repositories.UserRepository;
+import com.nnk.springboot.service.UserService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -26,10 +27,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class UserController {
 
     /**
-     * The user repository for accessing user data from the database.
+     * The user service for accessing user data from the database.
      */
     @Autowired
-    private UserRepository userRepository;
+    private UserService userService;
 
     /**
      * Displays the list of users based on the user's role.
@@ -41,7 +42,7 @@ public class UserController {
     @RequestMapping("/user/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("httpServletRequest", httpServletRequest);
-        model.addAttribute("users", userRepository.findAll());
+        model.addAttribute("users", userService.findAll());
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
         }
@@ -78,7 +79,7 @@ public class UserController {
             BindingResult result,
             RedirectAttributes redirectAttributes,
             Model model) {
-        DBUser alreadyExists = userRepository.findByUsername(user.getUsername());
+        DBUser alreadyExists = userService.findByUsername(user.getUsername());
         if(alreadyExists != null) {
             redirectAttributes.addFlashAttribute("error", "User already exists");
             return "redirect:/user/list";
@@ -86,8 +87,8 @@ public class UserController {
         if (!result.hasErrors()) {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
-            userRepository.save(user);
-            model.addAttribute("users", userRepository.findAll());
+            userService.save(user);
+            model.addAttribute("users", userService.findAll());
             redirectAttributes.addFlashAttribute("success", "User got saved");
             return "redirect:/user/list";
         }
@@ -104,7 +105,7 @@ public class UserController {
      */
     @GetMapping("/user/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        DBUser user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
+        DBUser user = userService.findById(id);
         user.setPassword("");
         model.addAttribute("user", user);
         return "user/update";
@@ -131,8 +132,8 @@ public class UserController {
             BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
             user.setPassword(encoder.encode(user.getPassword()));
             user.setId(id);
-            userRepository.save(user);
-            model.addAttribute("users", userRepository.findAll());
+            userService.save(user);
+            model.addAttribute("users", userService.findAll());
             redirectAttributes.addFlashAttribute("success", "User got updated");
             return "redirect:/user/list";
         }
@@ -156,9 +157,9 @@ public class UserController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        DBUser user = userRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid user Id:" + id));
-        userRepository.delete(user);
-        model.addAttribute("users", userRepository.findAll());
+        DBUser user = userService.findById(id);
+        userService.deleteById(user.getId());
+        model.addAttribute("users", userService.findAll());
         redirectAttributes.addFlashAttribute("success", "User got deleted");
         return "redirect:/user/list";
     }

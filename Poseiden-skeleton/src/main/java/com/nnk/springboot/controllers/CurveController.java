@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.CurvePoint;
 import com.nnk.springboot.repositories.CurvePointRepository;
+import com.nnk.springboot.service.CurvePointService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class CurveController {
 
     @Autowired
-    private CurvePointRepository curvePointRepository;
+    private CurvePointService curvePointService;
 
     @RequestMapping("/curvePoint/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("httpServletRequest", httpServletRequest);
-        model.addAttribute("curvePoints", curvePointRepository.findAll());
+        model.addAttribute("curvePoints", curvePointService.findAll());
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
         }
@@ -47,8 +48,8 @@ public class CurveController {
             RedirectAttributes redirectAttributes,
             Model model) {
         if(!result.hasErrors()){
-            curvePointRepository.save(curvePoint);
-            model.addAttribute("curvePoints", curvePointRepository.findAll());
+            curvePointService.save(curvePoint);
+            model.addAttribute("curvePoints", curvePointService.findAll());
             redirectAttributes.addFlashAttribute("success", "Curve Point got saved");
             return "redirect:/curvePoint/list";
         }
@@ -58,10 +59,10 @@ public class CurveController {
 
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateCurvePointForm(@PathVariable("id") Integer id, Model model) {
-        CurvePoint curvePoint = curvePointRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint id: " + id));
+        CurvePoint curvePoint = curvePointService.findById(id);
         model.addAttribute("curvePoint", curvePoint);
         curvePoint.setId(id);
-        curvePointRepository.save(curvePoint);
+        curvePointService.save(curvePoint);
         return "curvePoint/update";
     }
 
@@ -77,8 +78,8 @@ public class CurveController {
             return "curvePoint/update";
         }
         curvePoint.setId(id);
-        curvePointRepository.save(curvePoint);
-        model.addAttribute("curvePoints", curvePointRepository.findAll());
+        curvePointService.save(curvePoint);
+        model.addAttribute("curvePoints", curvePointService.findAll());
         redirectAttributes.addFlashAttribute("success", "Curve Point got updated");
         return "redirect:/curvePoint/list";
     }
@@ -88,9 +89,9 @@ public class CurveController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        CurvePoint curvePoint = curvePointRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid curvePoint id: " + id));
-        curvePointRepository.delete(curvePoint);
-        model.addAttribute("curvePoints", curvePointRepository.findAll());
+        CurvePoint curvePoint = curvePointService.findById(id);
+        curvePointService.deleteById(curvePoint.getId());
+        model.addAttribute("curvePoints", curvePointService.findAll());
         redirectAttributes.addFlashAttribute("success", "Curve Point got deleted");
         return "redirect:/curvePoint/list";
     }
