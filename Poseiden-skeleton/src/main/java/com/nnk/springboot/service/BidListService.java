@@ -28,10 +28,6 @@ public class BidListService {
     }
 
     public BidList findById(Integer id) {
-        BidList bidList = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid bidList id " + id));
-        if(bidList == null){
-            return null;
-        }
-        return bidList;
+        return repository.findById(id).orElse(null);
     }
 }

@@ -29,10 +29,6 @@ public class CurvePointService {
     }
 
     public CurvePoint findById(Integer id) {
-        CurvePoint curvePoint = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid CurvePoint id " + id));
-        if(curvePoint == null){
-            return null;
-        }
-        return curvePoint;
+        return  repository.findById(id).orElse(null);
     }
 }

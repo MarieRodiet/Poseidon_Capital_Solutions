@@ -28,11 +28,7 @@ public class UserService {
     }
 
     public DBUser findById(Integer id) {
-        DBUser user = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid DBUser id " + id));
-        if(user == null){
-            return null;
-        }
-        return user;
+        return repository.findById(id).orElse(null);
     }
 
     public DBUser findByUsername(String username) {
