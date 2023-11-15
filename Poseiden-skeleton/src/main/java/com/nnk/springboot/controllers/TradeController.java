@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Trade;
 import com.nnk.springboot.repositories.TradeRepository;
+import com.nnk.springboot.service.TradeService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class TradeController {
 
     @Autowired
-    private TradeRepository tradeRepository;
+    private TradeService tradeService;
 
     @RequestMapping("/trade/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("httpServletRequest", httpServletRequest);
-        model.addAttribute("trades", tradeRepository.findAll());
+        model.addAttribute("trades", tradeService.findAll());
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
         }
@@ -47,9 +48,9 @@ public class TradeController {
             RedirectAttributes redirectAttributes,
             Model model) {
         if(!result.hasErrors()){
-            tradeRepository.save(trade);
+            tradeService.save(trade);
             redirectAttributes.addFlashAttribute("success", "Trade got saved");
-            model.addAttribute("trades", tradeRepository.findAll());
+            model.addAttribute("trades", tradeService.findAll());
             return "redirect:/trade/list";
         }
         redirectAttributes.addFlashAttribute("error", "Trade could not get saved");
@@ -58,7 +59,7 @@ public class TradeController {
 
     @GetMapping("/trade/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid trade id " + id));
+        Trade trade = tradeService.findById(id);
         model.addAttribute("trade", trade);
         return "trade/update";
     }
@@ -75,7 +76,7 @@ public class TradeController {
             return "trade/update";
         }
         trade.setTradeId(id);
-        tradeRepository.save(trade);
+        tradeService.save(trade);
         model.addAttribute("trade", trade);
         redirectAttributes.addFlashAttribute("success", "Trade got updated");
         return "redirect:/trade/list";
@@ -86,9 +87,9 @@ public class TradeController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        Trade trade = tradeRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid trade id " + id));
-        tradeRepository.delete(trade);
-        model.addAttribute("trades", tradeRepository.findAll());
+        Trade trade = tradeService.findById(id);
+        tradeService.deleteById(trade.getTradeId());
+        model.addAttribute("trades", tradeService.findAll());
         redirectAttributes.addFlashAttribute("success", "Trade got deleted");
         return "redirect:/trade/list";
     }

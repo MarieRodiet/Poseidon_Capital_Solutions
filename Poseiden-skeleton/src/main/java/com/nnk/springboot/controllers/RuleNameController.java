@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.RuleName;
 import com.nnk.springboot.repositories.RuleNameRepository;
+import com.nnk.springboot.service.RuleNameService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,12 +20,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RuleNameController {
 
     @Autowired
-    private RuleNameRepository ruleNameRepository;
+    private RuleNameService ruleNameService;
 
     @RequestMapping("/ruleName/list")
     public String home(Model model, HttpServletRequest httpServletRequest){
         model.addAttribute("httpServletRequest", httpServletRequest);
-        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        model.addAttribute("ruleNames", ruleNameService.findAll());
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
         }
@@ -47,8 +48,8 @@ public class RuleNameController {
             RedirectAttributes redirectAttributes,
             Model model) {
         if(!result.hasErrors()){
-            ruleNameRepository.save(ruleName);
-            model.addAttribute("ruleNames", ruleNameRepository.findAll());
+            ruleNameService.save(ruleName);
+            model.addAttribute("ruleNames", ruleNameService.findAll());
             redirectAttributes.addFlashAttribute("success", "Rule name got saved");
             return "redirect:/ruleName/list";
         }
@@ -58,7 +59,7 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        RuleName ruleName = ruleNameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
+        RuleName ruleName = ruleNameService.findById(id);
         model.addAttribute("ruleName", ruleName);
         return "ruleName/update";
     }
@@ -74,8 +75,8 @@ public class RuleNameController {
             return "ruleName/update";
         }
         ruleName.setId(id);
-        ruleNameRepository.save(ruleName);
-        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        ruleNameService.save(ruleName);
+        model.addAttribute("ruleNames", ruleNameService.findAll());
         redirectAttributes.addFlashAttribute("success", "Rule name got updated");
         return "redirect:/ruleName/list";
     }
@@ -85,9 +86,9 @@ public class RuleNameController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        RuleName ruleName = ruleNameRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid ruleName Id:" + id));
-        ruleNameRepository.delete(ruleName);
-        model.addAttribute("ruleNames", ruleNameRepository.findAll());
+        RuleName ruleName = ruleNameService.findById(id);
+        ruleNameService.deleteById(ruleName.getId());
+        model.addAttribute("ruleNames", ruleNameService.findAll());
         redirectAttributes.addFlashAttribute("success", "Rule name got deleted");
         return "redirect:/ruleName/list";
     }

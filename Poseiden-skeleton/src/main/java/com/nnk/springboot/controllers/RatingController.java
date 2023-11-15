@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.Rating;
 import com.nnk.springboot.repositories.RatingRepository;
+import com.nnk.springboot.service.RatingService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,12 +21,12 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class RatingController {
 
     @Autowired
-    private RatingRepository ratingRepository;
+    private RatingService ratingService;
 
     @RequestMapping("/rating/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
         model.addAttribute("httpServletRequest", httpServletRequest);
-        model.addAttribute("ratings", ratingRepository.findAll());
+        model.addAttribute("ratings", ratingService.findAll());
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
         }
@@ -47,9 +48,9 @@ public class RatingController {
             RedirectAttributes redirectAttributes,
             Model model) {
         if(!result.hasErrors()){
-            ratingRepository.save(rating);
+            ratingService.save(rating);
             redirectAttributes.addFlashAttribute("success", "Rating got saved");
-            model.addAttribute("ratings", ratingRepository.findAll());
+            model.addAttribute("ratings", ratingService.findAll());
             return "redirect:/rating/list";
         }
         redirectAttributes.addFlashAttribute("error", "Rating could not get saved");
@@ -58,7 +59,7 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
+        Rating rating = ratingService.findById(id);
         model.addAttribute("rating", rating);
         return "rating/update";
     }
@@ -75,7 +76,7 @@ public class RatingController {
            return "rating/update";
        }
        rating.setId(id);
-       ratingRepository.save(rating);
+        ratingService.save(rating);
        redirectAttributes.addFlashAttribute("success", "Rating got updated");
        model.addAttribute("rating", rating);
        return "redirect:/rating/list";
@@ -86,9 +87,9 @@ public class RatingController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        Rating rating = ratingRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Invalid rating Id:" + id));
-        ratingRepository.delete(rating);
-        model.addAttribute("ratings", ratingRepository.findAll());
+        Rating rating = ratingService.findById(id);
+        ratingService.deleteById(rating.getId());
+        model.addAttribute("ratings", ratingService.findAll());
         redirectAttributes.addFlashAttribute("success", "Rating got deleted");
         return "redirect:/rating/list";
     }

@@ -2,6 +2,7 @@ package com.nnk.springboot.controllers;
 
 import com.nnk.springboot.domain.BidList;
 import com.nnk.springboot.repositories.BidListRepository;
+import com.nnk.springboot.service.BidListService;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,11 +21,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 public class BidListController {
 
     @Autowired
-    private BidListRepository bidListRepository;
+    private BidListService bidListService;
 
     @RequestMapping("/bidList/list")
     public String home(Model model, HttpServletRequest httpServletRequest) {
-        model.addAttribute("bidLists", bidListRepository.findAll());
+        model.addAttribute("bidLists", bidListService.findAll());
         model.addAttribute("httpServletRequest", httpServletRequest);
         if (httpServletRequest.isUserInRole("ADMIN")) {
             model.addAttribute("role", "ADMIN");
@@ -48,8 +49,8 @@ public class BidListController {
             RedirectAttributes redirectAttributes,
             Model model) {
         if(!result.hasErrors()){
-            bidListRepository.save(bid);
-            model.addAttribute("bidLists", bidListRepository.findAll());
+            bidListService.save(bid);
+            model.addAttribute("bidLists", bidListService.findAll());
             redirectAttributes.addFlashAttribute("success", "BidList got saved");
             return "redirect:/bidList/list";
         }
@@ -59,7 +60,7 @@ public class BidListController {
 
     @GetMapping("/bidList/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        BidList bidList = bidListRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid bidList id " + id));
+        BidList bidList = bidListService.findById(id);
         model.addAttribute("bidList", bidList);
         return "bidList/update";
     }
@@ -76,8 +77,8 @@ public class BidListController {
             return "bidList/update";
         }
         bidList.setBidListId(id);
-        bidListRepository.save(bidList);
-        model.addAttribute("bidLists", bidListRepository.findAll());
+        bidListService.save(bidList);
+        model.addAttribute("bidLists", bidListService.findAll());
         redirectAttributes.addFlashAttribute("success", "BidList got updated");
         return "redirect:/bidList/list";
     }
@@ -87,8 +88,8 @@ public class BidListController {
             @PathVariable("id") Integer id,
             RedirectAttributes redirectAttributes,
             Model model) {
-        BidList bidList = bidListRepository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid bidList id " + id));
-        bidListRepository.delete(bidList);
+        BidList bidList = bidListService.findById(id);
+        bidListService.deleteById(id);
         model.addAttribute("bidList", bidList);
         redirectAttributes.addFlashAttribute("success", "BidList got deleted");
         return "redirect:/bidList/list";

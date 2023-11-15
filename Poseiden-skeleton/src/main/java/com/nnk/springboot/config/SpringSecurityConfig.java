@@ -13,13 +13,29 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+/**
+ * The SpringSecurityConfig class configures Spring Security settings for the application.
+ * It defines security rules, authentication mechanisms, and access permissions for different endpoints.
+ *
+ * @author Marie Moore
+ */
 @Configuration
 @EnableWebSecurity
 public class SpringSecurityConfig {
 
+    /**
+     * The custom user details service for retrieving user information.
+     */
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
 
+    /**
+     * Configures the security filter chain for the application.
+     *
+     * @param http the HttpSecurity object to configure
+     * @return the configured SecurityFilterChain
+     * @throws Exception if an error occurs during configuration
+     */
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
