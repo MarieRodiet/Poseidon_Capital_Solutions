@@ -17,6 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import jakarta.validation.Valid;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.util.Objects;
+
 /**
  * The UserController class handles HTTP requests related to user management.
  * It includes functionalities such as listing users, adding, updating, and deleting users.
@@ -158,9 +160,15 @@ public class UserController {
             RedirectAttributes redirectAttributes,
             Model model) {
         DBUser user = userService.findById(id);
-        userService.deleteById(user.getId());
+        DBUser currentUser = userService.findCurrentUser();
+        if(Objects.equals(currentUser.getId(), user.getId())){
+            redirectAttributes.addFlashAttribute("error", "Could not delete your account");
+        }
+        else{
+            userService.deleteById(user.getId());
+            redirectAttributes.addFlashAttribute("success", "User got deleted");
+        }
         model.addAttribute("users", userService.findAll());
-        redirectAttributes.addFlashAttribute("success", "User got deleted");
         return "redirect:/user/list";
     }
 }
