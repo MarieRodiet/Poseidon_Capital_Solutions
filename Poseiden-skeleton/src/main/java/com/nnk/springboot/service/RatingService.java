@@ -28,10 +28,6 @@ public class RatingService {
     }
 
     public Rating findById(Integer id) {
-        Rating rating = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid Rating id " + id));
-        if(rating == null){
-            return null;
-        }
-        return rating;
+        return repository.findById(id).orElse(null);
     }
 }

@@ -29,10 +29,6 @@ public class RuleNameService {
     }
 
     public RuleName findById(Integer id) {
-        RuleName ruleName = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid Rulename id " + id));
-        if(ruleName == null){
-            return null;
-        }
-        return ruleName;
+        return repository.findById(id).orElse(null);
     }
 }

@@ -29,10 +29,6 @@ public class TradeService {
     }
 
     public Trade findById(Integer id) {
-        Trade trade = repository.findById(id).orElseThrow(() -> new IllegalStateException("Invalid Trade id " + id));
-        if(trade == null){
-            return null;
-        }
-        return trade;
+        return repository.findById(id).orElse(null);
     }
 }
